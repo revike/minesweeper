@@ -43,11 +43,15 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
+    'drf_spectacular',
+
+    'main',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -112,6 +116,17 @@ DATE_FORMAT = 'Y-m-d'
 TIME_FORMAT = 'H:i:s'
 DATETIME_FORMAT = f'{DATE_FORMAT} {TIME_FORMAT}'
 
+# SPECTACULAR_SETTINGS
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Oscar Crm',
+    'VERSION': '0.0.1',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'filter': True,
+    },
+    'COMPONENT_SPLIT_REQUEST': True
+}
+
 # REST_FRAMEWORK
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': DATETIME_FORMAT_DRF,
@@ -129,6 +144,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
         'rest_framework.parsers.FileUploadParser',
     ],
+    'EXCEPTION_HANDLER': 'main.utils.custom_exception_handler'
 }
 
 if DEBUG:
@@ -163,7 +179,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST').split()
 
-CSRF_TRUSTED_ORIGINS = CORS_ORIGIN_WHITELIST
+# CSRF_TRUSTED_ORIGINS = CORS_ORIGIN_WHITELIST
 
 CORS_ALLOW_HEADERS = (
     '*',
@@ -171,3 +187,9 @@ CORS_ALLOW_HEADERS = (
     'Access-Control-Allow-Headers',
     'Access-Control-Allow-Credentials',
 )
+
+# Game
+MIN_WIDTH = 2
+MAX_WIDTH = 30
+MIN_HEIGHT = 2
+MAX_HEIGHT = 30
