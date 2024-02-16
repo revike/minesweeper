@@ -44,7 +44,7 @@ class TurnGameAPIView(generics.CreateAPIView):
             game = Game.objects.filter(game_id=game_id).first()
             response_data['error'] = f'игра с идентификатором {game_id} не была создана или устарела (неактуальна)'
             if game:
-                game_update = game.updated_at
+                game_update = game.game.updated_at
                 if (datetime_now - game_update).seconds < TIME_LIVE_SECONDS:
                     response_data['error'] = 'игра завершена'
                     if not game.completed:
@@ -53,9 +53,14 @@ class TurnGameAPIView(generics.CreateAPIView):
                         if isinstance(col, int) and isinstance(row, int):
                             response_data['error'] = f'ряд должен быть неотрицательным и менее высоты {game.height}'
                             if 0 <= row < game.height:
-                                response_data['error'] = f'колонка должна быть неотрицательной и менее ширины {game.width}'
+                                response_data[
+                                    'error'] = f'колонка должна быть неотрицательной и менее ширины {game.width}'
                                 if 0 <= col <= game.width:
-                                    game_obj = get_game_data(game, col, row)
-                                    response_data = NewGameSerializer(game_obj).data
-                                    response_status = status.HTTP_200_OK
+                                    response_data['error'] = 'уже открытая ячейка'
+                                    field = game.game.field
+                                    cell = field[row][col]
+                                    if cell == ' ':
+                                        game_obj = get_game_data(game, col, row)
+                                        response_data = NewGameSerializer(game_obj).data
+                                        response_status = status.HTTP_200_OK
         return Response(response_data, response_status)

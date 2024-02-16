@@ -26,9 +26,9 @@ class Game(models.Model):
         return f'{self.game_id}'
 
     def save(self, *args, **kwargs):
-        if self.width < 2 or self.width > 30:
+        if self.width < MIN_WIDTH or self.width > MAX_WIDTH:
             raise ValidationError(f'ширина поля должна быть не менее {MIN_WIDTH} и не более {MAX_WIDTH}')
-        if self.height < 2 or self.height > 30:
+        if self.height < MIN_HEIGHT or self.height > MAX_HEIGHT:
             raise ValidationError(f'высота поля должна быть не менее {MIN_HEIGHT} и не более {MAX_HEIGHT}')
         max_mines_count = self.width * self.height
         if self.mines_count >= max_mines_count or self.mines_count < 1:
@@ -41,6 +41,7 @@ class GameField(models.Model):
     game_field = models.OneToOneField(Game, on_delete=models.CASCADE, related_name='game', verbose_name='game')
     field = models.JSONField(verbose_name='field', null=True)
     field_bomb = models.JSONField(verbose_name='bomb field', null=True)
+    updated_at = models.DateTimeField(verbose_name='updated at', auto_now=True)
 
     class Meta:
         verbose_name = 'game field'
