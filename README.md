@@ -10,8 +10,8 @@
 -------------------
 
 ```
-* Python 3.12.0
-* Django 5.0.1
+* Python 3.14.0
+* Django 5.0.2
 * Django REST Framework 3.14.0
 ```
 
