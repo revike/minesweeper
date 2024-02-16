@@ -11,9 +11,9 @@ class NewGameDummySerializer(serializers.Serializer):
 class NewGameSerializer(serializers.ModelSerializer):
     """New Game Serializer"""
     completed = serializers.BooleanField(read_only=True)
-    width = serializers.IntegerField(default=10)
-    height = serializers.IntegerField(default=10)
-    mines_count = serializers.IntegerField(default=10)
+    width = serializers.IntegerField(required=True)
+    height = serializers.IntegerField(required=True)
+    mines_count = serializers.IntegerField(required=True)
     field = serializers.JSONField(read_only=True, default=[[' ']])
 
     class Meta:
