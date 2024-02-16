@@ -1,5 +1,6 @@
 import copy
 import random
+from uuid import UUID
 
 
 def create_field(width, height):
@@ -66,3 +67,17 @@ def create_bomb_field(width, height, fields, mines_count):
                         break
         row, col = 0, col + 1 if len(result_fields) > col + 1 else 0
     return result_fields
+
+
+def check_uuid(value, version=4):
+    """Check UUID"""
+    try:
+        UUID(value, version=version)
+        return True
+    except ValueError:
+        return False
+
+
+def get_game_data(game, col, row):
+    """get game data. Todo: [col][row]"""
+    return game

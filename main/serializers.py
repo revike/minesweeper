@@ -24,3 +24,10 @@ class NewGameSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['field'] = instance.game.field
         return representation
+
+
+class TurnSerializer(serializers.Serializer):
+    """Turn Serializers"""
+    game_id = serializers.UUIDField(required=True)
+    col = serializers.IntegerField(required=True)
+    row = serializers.IntegerField(required=True)
