@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
+
+from manage import DESCRIPTION
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -118,7 +121,8 @@ DATETIME_FORMAT = f'{DATE_FORMAT} {TIME_FORMAT}'
 
 # SPECTACULAR_SETTINGS
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Oscar Crm',
+    'TITLE': 'Miner',
+    'DESCRIPTION': DESCRIPTION,
     'VERSION': '0.0.1',
     'SERVE_INCLUDE_SCHEMA': False,
     'SWAGGER_UI_SETTINGS': {
@@ -193,4 +197,4 @@ MIN_WIDTH = 2
 MAX_WIDTH = 30
 MIN_HEIGHT = 2
 MAX_HEIGHT = 30
-TIME_LIVE_SECONDS = 60 * 2
+TIME_LIVE_SECONDS = 60 * 3

@@ -92,17 +92,65 @@ def get_game_data(game, col, row):
             game.completed = True
             game.save()
         elif obj_bomb == '0':
-            field = set_field_zero(field, field_bomb, obj_bomb, row, col)
+            field, cells = set_field_zero(field, field_bomb, obj_bomb, row, col)
+            for cell in cells:
+                set_field_zero(field, field_bomb, obj_bomb, cell[0], cell[1], cells)
         game.game.field = field
         game.game.save()
         game = check_win_game(game)
     return game
 
 
-def set_field_zero(field, field_bomb, obj_bomb, row, col):
+def set_field_zero(fields, field_bomb, obj_bomb, row, col, cells=None):
     """Set field zero"""
-    field[row][col] = obj_bomb
-    return field
+    if cells is None:
+        cells = []
+    fields[row][col] = obj_bomb
+
+    def get_cell_value(fields_list, fields_bomb, row_value, col_value):
+        """Get cell value"""
+        check_cell_zero = False
+        if 0 <= row_value < len(fields_list[0]) and 0 <= col_value < len(fields_list):
+            cell_value = fields_bomb[row_value][col_value]
+            fields_list[row_value][col_value] = cell_value
+            if cell_value == '0':
+                check_cell_zero = True
+        return fields_list, check_cell_zero
+
+    row -= 1
+    fields, cell_zero = get_cell_value(fields, field_bomb, row, col)
+    if cell_zero and (row, col,) not in cells:
+        cells.append((row, col,))
+    col -= 1
+    fields, cell_zero = get_cell_value(fields, field_bomb, row, col)
+    if cell_zero and (row, col,) not in cells:
+        cells.append((row, col,))
+    row += 1
+    fields, cell_zero = get_cell_value(fields, field_bomb, row, col)
+    if cell_zero and (row, col,) not in cells:
+        cells.append((row, col,))
+    row += 1
+    fields, cell_zero = get_cell_value(fields, field_bomb, row, col)
+    if cell_zero and (row, col,) not in cells:
+        cells.append((row, col,))
+    col += 1
+    fields, cell_zero = get_cell_value(fields, field_bomb, row, col)
+    if cell_zero and (row, col,) not in cells:
+        cells.append((row, col,))
+    col += 1
+    fields, cell_zero = get_cell_value(fields, field_bomb, row, col)
+    if cell_zero and (row, col,) not in cells:
+        cells.append((row, col,))
+    row -= 1
+    fields, cell_zero = get_cell_value(fields, field_bomb, row, col)
+    if cell_zero and (row, col,) not in cells:
+        cells.append((row, col,))
+    row -= 1
+    fields, cell_zero = get_cell_value(fields, field_bomb, row, col)
+    if cell_zero and (row, col,) not in cells:
+        cells.append((row, col,))
+
+    return fields, cells
 
 
 def check_win_game(game):
