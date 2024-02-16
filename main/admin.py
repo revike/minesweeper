@@ -2,6 +2,10 @@ from django.contrib import admin
 
 from main.forms import GameAdminForm
 from main.models import Game, GameField
+from settings.settings import FRONT_URL
+
+admin.site.header = 'miner'
+admin.site.site_url = FRONT_URL
 
 
 class GameFieldInline(admin.StackedInline):

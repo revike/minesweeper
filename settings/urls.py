@@ -18,12 +18,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+from django.views.generic import RedirectView
 
 from settings import settings
 from settings.docs import url_docs
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(url='admin/', permanent=False), name='index'),
     path('', include('main.urls', namespace='main')),
 ]
 
