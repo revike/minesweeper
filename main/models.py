@@ -15,6 +15,8 @@ class Game(models.Model):
     height = models.IntegerField(verbose_name='height', default=10)
     mines_count = models.IntegerField(verbose_name='mines_count', default=5)
     completed = models.BooleanField(verbose_name='completed', default=False)
+    created_at = models.DateTimeField(verbose_name='created at', auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name='updated at', auto_now=True)
 
     class Meta:
         verbose_name = 'game'

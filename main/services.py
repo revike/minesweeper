@@ -79,5 +79,48 @@ def check_uuid(value, version=4):
 
 
 def get_game_data(game, col, row):
-    """get game data. Todo: [col][row]"""
+    """Get game data"""
+    if not game.completed:
+        field = copy.deepcopy(game.game.field)
+        field_bomb = copy.deepcopy(game.game.field_bomb)
+        obj_bomb = field_bomb[row][col]
+        if obj_bomb not in ('0', 'X'):
+            if obj_bomb != 'X':
+                field[row][col] = obj_bomb
+        elif obj_bomb == 'X':
+            field = game.game.field_bomb
+            game.completed = True
+            game.save()
+        elif obj_bomb == '0':
+            field = set_field_zero(field, field_bomb, obj_bomb, row, col)
+        game.game.field = field
+        game.game.save()
+        game = check_win_game(game)
+    return game
+
+
+def set_field_zero(field, field_bomb, obj_bomb, row, col):
+    """Set field zero"""
+    field[row][col] = obj_bomb
+    return field
+
+
+def check_win_game(game):
+    """Check Win Game"""
+    mines_count = 0
+    for fields in game.game.field:
+        for field in fields:
+            if field == ' ':
+                mines_count += 1
+    if mines_count == game.mines_count:
+        game.completed = True
+        result_win = copy.deepcopy(game.game.field_bomb)
+        for i, l in enumerate(result_win):
+            for k, j in enumerate(l):
+                if j == 'X':
+                    result_win[i][k] = 'M'
+        game.game.field = result_win
+        game.game.save()
+        game.completed = True
+        game.save()
     return game
