@@ -26,7 +26,7 @@ class GameAdmin(admin.ModelAdmin):
     """Game Admin"""
     inlines = [GameFieldInline]
     form = GameAdminForm
-    readonly_fields = ['completed']
+    readonly_fields = ['completed', 'created_at', 'updated_at']
 
     def has_change_permission(self, request, obj=None):
         pass
