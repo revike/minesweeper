@@ -119,10 +119,11 @@ def set_field_zero(fields, field_bomb, obj_bomb, row, col, cells=None):
         """Get cell value"""
         check_cell_zero = False
         if 0 <= row_value < len(fields_list) and 0 <= col_value < len(fields_list[0]):
-            cell_value = fields_bomb[row_value][col_value]
-            fields_list[row_value][col_value] = cell_value
-            if cell_value == '0':
-                check_cell_zero = True
+            if fields[row][col] == ' ':
+                cell_value = fields_bomb[row_value][col_value]
+                fields_list[row_value][col_value] = cell_value
+                if cell_value == '0':
+                    check_cell_zero = True
         return fields_list, check_cell_zero
 
     row -= 1
