@@ -52,7 +52,7 @@ class GameField(models.Model):
 
     @staticmethod
     @receiver(models.signals.post_save, sender=Game)
-    def create_user_profile(sender, instance, created, **kwargs):
+    def create_game(sender, instance, created, **kwargs):
         if created and sender == Game and kwargs:
             game_field = GameField.objects.create(game_field=instance)
             width, height, mines_count = instance.width, instance.height, instance.mines_count
