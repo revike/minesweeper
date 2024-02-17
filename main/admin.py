@@ -4,7 +4,7 @@ from main.forms import GameAdminForm
 from main.models import Game, GameField
 from settings.settings import FRONT_URL
 
-admin.site.header = 'miner'
+admin.site.header = 'minesweeper'
 admin.site.site_url = FRONT_URL
 
 
