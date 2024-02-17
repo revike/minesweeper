@@ -15,7 +15,6 @@ class Command(BaseCommand):
                 'is_active': True,
                 'is_staff': True,
                 'is_superuser': True,
-                'is_verified': True,
                 'password': password,
             }
             User.objects.update_or_create(username=ADMIN_USERNAME, defaults=data)
