@@ -49,3 +49,13 @@
 * Запуск
 
 ```python3 manage.py runserver```
+
+## Документация API
+
+* [/api/docs](/api/docs)
+
+## Тесты
+
+* Запуск
+
+```python3 manage.py test```
