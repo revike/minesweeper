@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+
+  app_miner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app_miner
+    volumes:
+      - .:/code
+    command: ./docker_commands.sh
+    env_file:
+      - .env
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    depends_on:
+      - db_miner
+
+  db_miner:
+    image: postgres:14.5
+    container_name: db_miner
+    volumes:
+      - pg_data_miner:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    restart: unless-stopped
+
+volumes:
+  pg_data_miner:

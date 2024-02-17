@@ -26,7 +26,7 @@
 
 ```touch .env```
 
-* Создаем виртуальное окружение
+* Создаем виртуальное окружение или [Запуск с помощью docker-compose](#docker)
 
 ```python3 -m venv venv```
 
@@ -59,3 +59,11 @@
 * Запуск
 
 ```python3 manage.py test```
+
+# Docker
+
+###### <a name="docker"></a> Для использования Postgres с помощью docker-compose в .env необходимо ENV_TYPE=docker
+
+* Запуск docker-compose
+
+```docker-compose up --build```
