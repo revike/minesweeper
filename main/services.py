@@ -42,11 +42,19 @@ def create_bomb_field(width, height, fields, mines_count):
     """Create Bomb field"""
     result_fields = copy.deepcopy(fields)
     result = []
-    while len(result) != mines_count:
-        col, row = random.randint(0, height - 1), random.randint(0, width - 1)
-        if [col, row] not in result:
-            result.append([col, row])
-            result_fields[col][row] = 'X'
+
+    cells_width = [i for i in range(width)]
+    cells_height = [i for i in range(height)]
+
+    for i in cells_width:
+        cell_list = list(map(lambda x: [x, i], cells_height))
+        for cell in cell_list:
+            result.append(cell)
+
+    indexes = random.sample([i for i in range(len(result))], mines_count)
+    for idx in indexes:
+        cell = result[idx]
+        result_fields[cell[0]][cell[1]] = 'X'
 
     row, col = 0, 0
     for field in result_fields:
