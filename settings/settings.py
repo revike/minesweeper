@@ -26,6 +26,8 @@ load_dotenv(dotenv_path=dot_env)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
+ENV_TYPE = os.getenv('ENV_TYPE', 'local')
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-2x+a6=mp65$q2z#f_e%^si3b(ah*t7h)$3*f8zqzv6&-b@0rxr'
 
@@ -85,12 +87,24 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if ENV_TYPE == 'local':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': 5432
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -200,3 +214,7 @@ MAX_HEIGHT = 30
 TIME_LIVE_SECONDS = 60 * 3
 
 FRONT_URL = os.getenv('FRONT_URL')
+
+# Admin
+ADMIN_USERNAME = os.getenv('ADMIN_USERNAME')
+ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')
