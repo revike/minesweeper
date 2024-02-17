@@ -90,14 +90,14 @@ def get_game_data(game, col, row):
         elif obj_bomb == 'X':
             field = game.game.field_bomb
             game.completed = True
-            game.save()
         elif obj_bomb == '0':
             field, cells = set_field_zero(field, field_bomb, obj_bomb, row, col)
             for cell in cells:
                 set_field_zero(field, field_bomb, obj_bomb, cell[0], cell[1], cells)
         game.game.field = field
-        game.game.save()
         game = check_win_game(game)
+        game.game.save()
+        game.save()
     return game
 
 
@@ -168,7 +168,5 @@ def check_win_game(game):
                 if j == 'X':
                     result_win[i][k] = 'M'
         game.game.field = result_win
-        game.game.save()
         game.completed = True
-        game.save()
     return game
