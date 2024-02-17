@@ -23,7 +23,7 @@ class GameAdminForm(forms.ModelForm):
         if not height:
             raise ValidationError(f'высота поля должна быть не менее {MIN_HEIGHT} и не более {MAX_HEIGHT}')
         if not mines_count:
-            raise ValidationError(f'количество мин должно быть не менее 1 и не более {max_mines_count - 1}')
+            raise ValidationError(f'заполните поле с минами')
         max_mines_count = width * height
         if width < 2 or width > 30:
             raise ValidationError(f'ширина поля должна быть не менее {MIN_WIDTH} и не более {MAX_WIDTH}')
