@@ -26,7 +26,7 @@ from settings.docs import url_docs
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='admin/', permanent=False), name='index'),
-    path('', include('main.urls', namespace='main')),
+    path('api/', include('main.urls', namespace='main')),
 ]
 
 if settings.DEBUG:

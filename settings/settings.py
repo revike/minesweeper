@@ -27,6 +27,8 @@ load_dotenv(dotenv_path=dot_env)
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 ENV_TYPE = os.getenv('ENV_TYPE', 'local')
+if '|' in ENV_TYPE:
+    ENV_TYPE = 'local'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-2x+a6=mp65$q2z#f_e%^si3b(ah*t7h)$3*f8zqzv6&-b@0rxr'
