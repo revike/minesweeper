@@ -5,6 +5,6 @@ from main.views import NewGameAPIView, TurnGameAPIView
 app_name = 'main'
 
 urlpatterns = [
-    path('api/new', NewGameAPIView.as_view(), name='new_game'),
-    path('api/turn', TurnGameAPIView.as_view(), name='turn_game'),
+    path('new', NewGameAPIView.as_view(), name='new_game'),
+    path('turn', TurnGameAPIView.as_view(), name='turn_game'),
 ]
